@@ -10,13 +10,21 @@ import (
 	"time"
 
 	"getPromiseApi/db"
-	"github.com/gin-gonic/gin"
 	"getPromiseApi/handlers"
+
+	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 
 func main() {
-	pool := db.DbStart()
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	databaseURL := os.Getenv("DATABASE_URL")
+	pool := db.DbStart(databaseURL)
 
 	db := db.NewDB(pool)
 	handlers.NewBaseHandler(db)

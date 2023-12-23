@@ -20,12 +20,13 @@ func NewDB(pool *pgxpool.Pool) *DB {
 
 
 
-func DbStart() *pgxpool.Pool {
-	urlExample := "postgres://postgres:228@localhost:5432/postgres"
-	dbpool, err := pgxpool.New(context.Background(), urlExample)
+func DbStart(baseUrl string) *pgxpool.Pool {
+	urlExample := baseUrl
+	dbpool, err := pgxpool.New(context.Background(), string(urlExample))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to create connection pool: %v", err)
 		os.Exit(1)
 	}
 	return dbpool
 }
+
