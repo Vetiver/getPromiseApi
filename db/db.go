@@ -3,10 +3,10 @@ package db
 import (
 	"context"
 	"fmt"
-	"os"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"golang.org/x/crypto/bcrypt"
+	"os"
 )
 
 type DB struct {
@@ -14,11 +14,12 @@ type DB struct {
 }
 
 type User struct {
-	ID       uuid.UUID `json:"id"`
-	Username string `json:"name"`
-	Group 	 string `json:"group"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	ID       	uuid.UUID `json:"id"`
+	Username 	string    `json:"name"`
+	Group    	string    `json:"group"`
+	Email    	string    `json:"email"`
+	Password 	string    `json:"password"`
+	ConfirmCode int 	  `json:"password"`
 }
 
 func NewDB(pool *pgxpool.Pool) *DB {
@@ -26,7 +27,6 @@ func NewDB(pool *pgxpool.Pool) *DB {
 		pool: pool,
 	}
 }
-
 
 func hashPassword(password string) (string, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)

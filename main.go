@@ -31,6 +31,9 @@ func main() {
 	r := gin.Default()
 	v1 := r.Group("/user")
 	{
+		v1.POST("/sendMail", func(c *gin.Context) {
+			handler.SendMail(c) 
+		})
 		v1.POST("/regiter", func(c *gin.Context) {
 			handler.RegisterUser(c) 
 		})
