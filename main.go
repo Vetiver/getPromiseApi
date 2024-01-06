@@ -27,12 +27,12 @@ func main() {
 	pool := db.DbStart(databaseURL)
 
 	db := db.NewDB(pool)
-	handlers.NewBaseHandler(db)
+	handler := handlers.NewBaseHandler(db)
 	r := gin.Default()
-	v1 := r.Group("/")
+	v1 := r.Group("/user")
 	{
-		v1.GET("/getUser", func(c *gin.Context) {
-			c.JSON(http.StatusOK, "hello")
+		v1.POST("/regiter", func(c *gin.Context) {
+			handler.RegisterUser(c) 
 		})
 	}
 	srv := &http.Server{

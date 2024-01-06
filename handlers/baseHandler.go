@@ -4,9 +4,14 @@ import (
 	"getPromiseApi/db"
 )
 
-type BaseHandler struct {
+type UserGet struct {
+	Parce []db.User `json:"parce"`
+ }
+
+
+ type BaseHandler struct {
 	db *db.DB
-}
+ }
 
 func NewBaseHandler(db *db.DB) *BaseHandler {
 	return &BaseHandler{
