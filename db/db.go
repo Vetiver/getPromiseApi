@@ -15,11 +15,15 @@ type DB struct {
 
 type User struct {
 	ID       	uuid.UUID `json:"id"`
-	Username 	string    `json:"name"`
-	Group    	string    `json:"group"`
-	Email    	string    `json:"email"`
-	Password 	string    `json:"password"`
-	ConfirmCode int 	  `json:"password"`
+	Username 	string    `json:"name"     `
+	Group    	string    `json:"group"    `
+	Email    	string    `json:"email"    `
+	Password 	string    `json:"password" `
+	ConfirmCode int 	 
+}
+
+type Token struct {
+	TokenString string `json:"accessToken"`
 }
 
 func NewDB(pool *pgxpool.Pool) *DB {
