@@ -15,10 +15,10 @@ type DB struct {
 
 type User struct {
 	ID       	uuid.UUID `json:"id"`
-	Username 	string    `json:"name"     `
-	Group    	string    `json:"group"    `
-	Email    	string    `json:"email"    `
-	Password 	string    `json:"password" `
+	Username 	string    `json:"name"     binding:"required"`
+	Group    	string    `json:"group"    binding:"required"`
+	Email    	string    `json:"email"    binding:"required"`
+	Password 	string    `json:"password" binding:"required,min=8"`
 	ConfirmCode int 	 
 }
 
