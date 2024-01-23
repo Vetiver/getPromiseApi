@@ -22,6 +22,11 @@ type User struct {
 	ConfirmCode int 	 
 }
 
+type UserLoginData struct {
+	Email string `json:"email" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
+
 type Token struct {
 	TokenString string `json:"accessToken"`
 }
@@ -71,4 +76,22 @@ func (db DB) RegisterUser(userData User) (*User, error) {
 	}
 
 	return &userData, nil
+}
+
+
+func (db DB) GetUserByEmail(email string) (*User, error) {
+    conn, err := db.pool.Acquire(context.Background())
+    if err != nil {
+        return nil, fmt.Errorf("unable to acquire a database connection: %v", err)
+    }
+    defer conn.Release()
+
+    var user User
+    err = conn.QueryRow(context.Background(), "SELECT id, name, \"group\", email, password FROM users WHERE email = $1", email).
+        Scan(&user.ID, &user.Username, &user.Group, &user.Email, &user.Password)
+    if err != nil {
+        return nil, fmt.Errorf("unable to retrieve user: %v", err)
+    }
+
+    return &user, err
 }

@@ -37,6 +37,9 @@ func main() {
 		v1.POST("/regiter", func(c *gin.Context) {
 			handler.RegisterUser(c) 
 		})
+		v1.GET("/login", func(c *gin.Context) {
+			handler.LoginUser(c)
+		})
 	}
 	srv := &http.Server{
 		Addr:    ":8080",
