@@ -16,7 +16,6 @@ import (
 )
 
 
-var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
 
 func generateRandomCode() int {
 	rand.NewSource(time.Now().UnixNano())

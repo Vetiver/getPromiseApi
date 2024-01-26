@@ -2,8 +2,9 @@ package handlers
 
 import (
 	"getPromiseApi/db"
+	"os"
 )
-
+var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
 type UserGet struct {
 	Parce []db.User `json:"parce"`
 }

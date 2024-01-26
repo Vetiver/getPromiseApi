@@ -29,6 +29,9 @@ func main() {
 	db := db.NewDB(pool)
 	handler := handlers.NewBaseHandler(db)
 	r := gin.Default()
+	r.GET("/getAllUsers", func(c *gin.Context) {
+		handler.GetAllUsers(c)
+	})
 	v1 := r.Group("/user")
 	{
 		v1.POST("/sendMail", func(c *gin.Context) {
@@ -41,6 +44,7 @@ func main() {
 			handler.LoginUser(c)
 		})
 	}
+	
 	srv := &http.Server{
 		Addr:    ":8080",
 		Handler: r,
