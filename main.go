@@ -27,14 +27,24 @@ func main() {
 	pool := db.DbStart(databaseURL)
 
 	db := db.NewDB(pool)
-	handlers.NewBaseHandler(db)
+	handler := handlers.NewBaseHandler(db)
 	r := gin.Default()
-	v1 := r.Group("/")
+	r.GET("/getAllUsers", func(c *gin.Context) {
+		handler.GetAllUsers(c)
+	})
+	v1 := r.Group("/user")
 	{
-		v1.GET("/getUser", func(c *gin.Context) {
-			c.JSON(http.StatusOK, "hello")
+		v1.POST("/sendMail", func(c *gin.Context) {
+			handler.SendMail(c) 
+		})
+		v1.POST("/regiter", func(c *gin.Context) {
+			handler.RegisterUser(c) 
+		})
+		v1.GET("/login", func(c *gin.Context) {
+			handler.LoginUser(c)
 		})
 	}
+	
 	srv := &http.Server{
 		Addr:    ":8080",
 		Handler: r,

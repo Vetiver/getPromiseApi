@@ -2,14 +2,21 @@ package handlers
 
 import (
 	"getPromiseApi/db"
+	"os"
 )
-
-type BaseHandler struct {
-	db *db.DB
+var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
+type UserGet struct {
+	Parce []db.User `json:"parce"`
 }
 
-func NewBaseHandler(db *db.DB) *BaseHandler {
+type BaseHandler struct {
+	db   *db.DB
+	Code map[string]*db.User
+}
+
+func NewBaseHandler(pool *db.DB) *BaseHandler {
 	return &BaseHandler{
-		db: db,
+		db:   pool,
+		Code: make(map[string]*db.User),
 	}
 }
